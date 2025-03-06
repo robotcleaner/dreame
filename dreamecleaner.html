@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Knowledge Base Search</title>
     <link rel="icon" type="image/png" href="/dreame/favicon.png">
+
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-8GSV4C9YR7"></script>
     <script>
@@ -162,7 +163,6 @@
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-
 <body>
     <!-- Popup -->
     <div id="popup">
@@ -226,7 +226,7 @@
             ja: {
                 pageTitle: "ナレッジベース検索",
                 productLabel: "製品を選択:",
-                searchButton: "検索",
+                searchButton: "검색",
                 searchPlaceholder: "キーワードを入力してください...",
                 noResults: "結果が見つかりません。別のキーワードをお試しください。"
             }
@@ -353,6 +353,39 @@
             document.getElementById('searchBox').placeholder = texts.searchPlaceholder;
             loadKnowledgeBase();
         }
+
+        // Disable Right-Click
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+            alert('Right-click is disabled.');
+        });
+
+        // Disable Developer Tools Shortcuts
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'U')) {
+                e.preventDefault();
+                alert('Developer tools are disabled.');
+            }
+        });
+
+        // Detect Developer Tools
+        (function () {
+            let devtoolsOpen = false;
+
+            function checkDevTools() {
+                const threshold = 160;
+                const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+                const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+
+                if ((widthThreshold || heightThreshold) && !devtoolsOpen) {
+                    devtoolsOpen = true;
+                    alert('Developer tools detected. Page will refresh.');
+                    window.location.reload();
+                }
+            }
+
+            setInterval(checkDevTools, 1000);
+        })();
     </script>
 </body>
 </html>
